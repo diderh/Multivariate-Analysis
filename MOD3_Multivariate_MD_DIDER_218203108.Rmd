@@ -1,0 +1,527 @@
+---
+title: Investigation of the role of environmental variables on the occurrence of macroinvertebrates in Austria using multivariate statistical methods.
+author: "MD. Dider Hossain (218203108)"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_section: yes
+    highlight: kate
+    toc: yes
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    toc_depth: 2
+    fig_width: 9
+    fig_height: 7
+    fig_caption: yes
+    number_sections: yes
+    df_print: kable
+  word_document:
+    toc: yes
+    toc_depth: '2'
+bibliography: ref.bib
+biblio-style: apalike
+link-citation: yes
+---
+
+![](C:/Advance Data Analysis/unilogo.png)
+
+```{r setup, include=FALSE}
+library(kableExtra)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Introduction
+
+The species composition of various aquatic species is not the same in all rivers or streams due to changes in some environmental parameters and geographic factors [@li2012relationships]. Stream biodiversity is affected by a combination of different environmental variables. Some of these factors include deforestation, agricultural management, and excessive use of hazardous fertilizers. [@ferreira2014importance]. In addition, the dam building in the river changes the flow of water, and the accumulation of river water changes the physico-chemical features of the water structure. These types of construction works also alter the composition of the benthic macroinvertebrates population. [@ogbeibu2002ecological]. Assessing habitat condition and water quality is critical because it helps us understanding the composition of aquatic communities [@ferreira2014importance]. The presence of diverse macroinvertebrates heavily influenced by the internal and exterior circumstances of a stream [@li2012relationships]. For this reason, macroinvertebrates species are frequently utilized to detect environmental changes or evaluate environmental quality. Furthermore, understanding the relationship among benthic macroinvertebrates, water chemistry, and habitat conditions is critical for stream conservation. [@ferreira2014importance]. Different macroinvertebrates have different habitat preferences, resulting in the diversity of macroinvertebrates in streams [@li2012relationships]. The research also states that some environmental parameters affect the abundance and distribution of macroinvertebrates species, based on their tolerance to certain environmental variables or their preference for certain habitat requirements. According to @ferreira2014importance, temperature, turbidity, and habitat loss can all be worsened when riparian vegetation is removed or destroyed. The study also added that the conversion of natural vegetation to agricultural land or cropland can have an impact on water quality, increasing siltation below the water system, and deteriorate habitat condition. In addition, a significant influence of altitude and catchment properties on the composition of aquatic macroinvertebrates was found in several lakes in Italy, Switzerland and Austria [@fureder2006macroinvertebrate]. Species use several techniques to adapt to harsh environmental conditions. The functional characteristics of species are the result of a long history of adaptation. [@choler2005consistent]. The feature of life cycle, adaptation technique to the harsh environmental condition, inherent physiological characteristic of an organism are the example of biological trait of a species. Feeding behavior, reproductive technique, lifespan, maximum body size, and so forth are examples of biological features of a species. These biological characteristics determine their ability to overcome environmental disturbances and adapt to the consequences of environmental changes. The application of trait-based statistical methods has greatly expanded our understanding of the effects of anthropogenic pressures on aquatic ecosystems and revealed the relationships between species and their environments. [@calapez2021influence]. The primary objective of this paper was to determine the effects of environmental factors on the abundance of specific macroinvertebrates species and on the macroinvertebrates community as a whole. We also attempted to ascertain how the biological features of benthic macroinvertebrates respond to environmental factors?
+
+
+
+# Methodology
+
+Data were obtained from the WISER (Water Integrative Systems to assess Ecological status and Recovery) website (**[link](http://www.wiser.eu/results/method-database/detail.php?id=49&qst=country%5B%5D%3DAustria%26category%5B%5D%3DRivers%26bqe%5B%5D%3DBenthic%2520Invertebrates)**). The data are Water Framework Directive monitoring data collected at 198 different sites in Austria. The data collection method was developed by BOKU- Institut für Hydrobiologie und Gewässermanagement, Arbeitsgruppe Benthosökologie und Gewässerbewertung. Multiple habitats are sampled in the most important habitats in proportion to their presence within a sampling reach. Samples were collected from all habitat categories at the sampling site with a minimum coverage of 5%. "Sampling unit" is a stationary sampling method that involves situating the net and disrupting the substrate in a quadratic region equal to the frame-size upstream of the net (0.25 x 0.25 m). Depending on the compactness of the substrate, sediments were disturbed to a depth of 15-20 cm (where possible). Hand net, Surber or Hess sampler were used to collect macroinvertebrates species. Hand-net was 25 x 25 cm, mesh size 500 µm, length of net was minimum 1m. 
+
+Macroinvertebrates species abundance data per site and environmental variable data per site were merged by sample_id. In this way, we extracted only 327 sampling units out of 536 sampling units. Statistical analyses were then performed on these selected data for macroinvertebrates species abundance data and environmental variables data. At first glance, a pairwise scatter plot was examined for our six environmental variables and their relationships. In **Figure 1**(appendix section), we can see the distribution of the different data points for all environmental variables. From the inspection of our data, it was found that temperature data was balanced or normally distributed. But, other variables such as catchment area, altitude, maximum depth, conductivity, pH variables have skewed data. Since these variables each have large outliers, log transformation was performed for those variables. Data transformation for non-normal data is necessary to stabilize the variance and increase the efficiency of data analysis [@piepho2009data]. To determine the highest and lowest species richness of the 327 sampling sites, species richness was calculated using the specnumber() function from the Vegan packages, and the Shannon-Weaver index was also calculated as a diversity measure. To estimate the role of environmental variables on the abundance of *Haliplus* sp., a multivariate generalized linear model (GLM) was conducted, and a model was selected by a multiple stepwise backward regression model based on the Akaike information criterion (AIC) value. Analysis of variance inflation factor (VIF) was performed to test the problem of multicollinearity among our environmental variables. From the VIF values of each environmental variable, it found that the VIF values are below the threshold **(VIF < 4)**, which means that we can rely on our regression results based on these variables and that these significant variables do not have a multicollinearity problem [@dormann2013collinearity]. 
+
+In addition, a canonical correspondence analysis (CCA) was conducted to determine the effects of key environmental variables on whole aquatic macroinvertebrates community abundance. In the case of CCA, a step() function was used where a full model and a null model were defined. In our case, we fitted a full model that included all of our predictor variables, and the null model included an intercept that did not include a predictor variable. Backward model selection, which is a part of stepwise logistic regression, was also performed to identify the best-fit model with significant environmental variables based on a lower AIC value, where a lower AIC value indicates the best fit of the model. According to @gareth2013introduction & @bruce2017practical, backward model selection can be applied when the number of samples is larger than the number of predictors or continuous variables. In our case, 327 sampling units and six different predictor variables were considered based on abundance data for 50 macroinvertebrates species, which means that the sample size of individual taxa is larger than the explanatory or continuous variables. After stepwise elimination of the predictor variables, a VIF test was also performed to check for the multicollinearity problem of our final four significant variables. The permutation test was also performed on the final CCA model to evaluate the significance of the fitted models. In this case, the species data were permuted and the model was fitted again, which happened 999 times. Permutational multivariate analysis of variance (PERMANOVA) was performed with 999 simulations for the fitted model to determine the significant effects of each environmental variable on macroinvertebrates species composition.  
+
+The RLQ analysis was performed to determine the relationship among environmental variable, functional traits and species abundance. The primary goal of this analysis is to link a sites-by-environmental variables table (R) to a species-by-traits table (Q), with a plot-by-species table (L) acting as a bridge between R and Q. Theoretically, the L matrix is assumed to quantify the degree of correlation between the R and Q matrices. Three distinct ordinations were used for three different data table. All trait variables were transformed as numeric variables to ease our statistical analysis. Correspondence analysis was performed to the species composition table (L) by using dudi.coa function. Since, our environmental data and traits data are contained quantitative variables and thus principal component analysis was performed to the environmental variable table (R) and species trait table (Q) by using dudi.pca function. [@choler2005consistent]. 
+
+# Results
+
+```{r Species abundance data and environmental data input, include=FALSE}
+
+environment <- readRDS("C:/Advance Data Analysis/MOD3_Multivariate_MD_DIDER_218203108/environment.rds")
+macroinvertebrates <- readRDS("C:/Advance Data Analysis/MOD3_Multivariate_MD_DIDER_218203108/macroinvertebrates.rds")
+```
+
+```{r view environment data, include=FALSE}
+view_ev <- environment[1:5, 1:7]
+(view_ev) %>%
+  kbl()%>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+```{r view species abundance data, include=FALSE}
+view_ab <- macroinvertebrates[1:5, 1:5]
+(view_ab) %>%
+  kbl()%>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+```{r Environment data and species abundance data merging and stored it into agg_data (Next statistical analysis will conduct for 327 sampling site), include=FALSE}
+agg_data <- merge(environment, macroinvertebrates, by = "sample_id", all.x = TRUE, all.y = FALSE)
+agg_data 
+str(agg_data)
+colnames(agg_data)
+```
+
+```{r include=FALSE}
+library(car)
+```
+
+
+```{r fig.cap="Pairwise scatterplot of continuous variables for macroinvertebrate data", fig.height=5, fig.width=9, include=FALSE}
+spm(agg_data[, c(2:7)])
+```
+
+```{r Statistical summary of our environmental variables. without temperature we found large difference between third quartile and maximum value for other environmental variables, include=FALSE}
+env.var <- (agg_data[, c(2:7)])
+(summary(env.var)) %>%
+  kbl(caption = "Summary statistics of environmental variables")%>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+```{r Log transformation of the skewed data and stored them also into agg_data , echo=FALSE}
+agg_data$Cat_Area <- log(agg_data$cat_area)
+agg_data$Altitude <- log(agg_data$altitude)
+agg_data$Max_Depth <- log(agg_data$max_depth) 
+agg_data$Conductivity <- log(agg_data$conductivity)
+agg_data$log_pH <- log(agg_data$pH)
+```
+
+```{r include=FALSE}
+agg_data$Cat_Area[which(!is.finite(agg_data$Cat_Area))] = NA
+agg_data$Altitude[which(!is.finite(agg_data$Altitude))] = NA
+agg_data <- na.omit(agg_data)
+```
+
+```{r Temperature and other log transformed variables are stored in trans.var (After log transformation, differences between large quartile and maximum values were reduced), include=FALSE}
+trans.var <- (agg_data[ , c(7, 58:62)])
+(summary(trans.var)) %>%
+  kbl(caption = "Summary statistics of environmental variables (transformed)")%>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+## Species richness and diversity metrices
+
+```{r include=FALSE}
+library(vegan)
+```
+
+```{r Species abundance data input extracting, include=FALSE}
+species_ex <- read.csv("C:/Advance Data Analysis/MOD3_Multivariate_MD_DIDER_218203108/species_final.csv")
+```
+
+```{r fig.cap= "Species accumulation curve for all 327 sampling site", include=FALSE}
+library(vegan)
+speccurve <- specaccum(species_ex, method = "random", permutations = 1000)
+plot(speccurve)
+```
+
+```{r Species richness for whole site, include=FALSE}
+sr <- specnumber(species_ex)
+sr
+max(sr)
+mean(sr)
+sd(sr)
+```
+
+```{r include=FALSE}
+SH <- diversity(species_ex)
+SH
+```
+
+The specnumber() function from the Vegan package was used to calculate species richness at 327 sampling sites. The highest number of macroinvertebrates species was found in "FW31001277B918" (249) sampling site, which included a total of 32 species. Only one macroinvertebrates species was found in sampling site "FW73200617B918"(314). This result is confirmed by the Shannon-Weaver index (H), according to which "FW31001277B918" and "FW73200617B918" sampling sites have the highest and lowest Shannon-Weaver index, respectively. At 327 sampling sites, the mean macroinvertebrates species richness was 10.35 and the standard deviation was 4.15. 
+
+
+## Role of Environmental variable on individual taxa abundance 
+
+```{r include=FALSE}
+library("PerformanceAnalytics")
+```
+
+
+```{r echo=FALSE, fig.cap="**Figure-1:** Correlation plot of continuous variables (Transformed dataset)", fig.align = 'center', fig.height=5, fig.width=7}
+chart.Correlation(trans.var, histogram=TRUE, pch=12)
+```
+
+**Figure-1** shows the relationship between different continuous variables and their correlation coefficients. For example, at the intersection of maximum depth and catchment area, maximum depth defines the vertical axis and catchment area defines the horizontal axis where upper triangle gives the correlation coefficient [@greenacre2014multivariate]. It was found that maximum depth had the highest correlation with catchment area (0.43) and conductivity had the second highest correlation coefficient (0.26) with temperature. In addition, maximum depth also correlated positively with pH.
+
+```{r include=FALSE}
+library(MASS)
+```
+
+```{r include=FALSE}
+species <- agg_data[,8:57]
+env.variables <- trans.var
+```
+
+
+```{r warning=FALSE, include=FALSE}
+lmH1 <- glm(species$`Haliplus sp.` ~ temperature + Cat_Area + 
+    Max_Depth + Conductivity + log_pH, data = trans.var, 
+           family = binomial(link = "logit"), 
+           na.action = "na.fail")
+```
+
+```{r warning=FALSE, include=FALSE}
+(vif(lmH1)) %>%
+  kbl(caption = " VIF values for each continuous variable (transformed)") %>%
+  kable_classic(full_width = F, html_font = "cambria")
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+step.lmH1 <- stepAIC(lmH1, direction = "backward")
+```
+
+```{r include=FALSE}
+summary(step.lmH1)
+```
+
+The multivariate GLM method was applied to determine the significant influence of environmental variables on the abundance data of *Haliplus* sp. All environmental variables except altitude were included in the initial model. The VIF analysis showed that all variables have VIF values less than 4, which means that we can rely on our regression result and they have no multicollinearity problem. The significant model was selected based on the AIC value. The final fitted model consisted of two environmental variables (temperature and conductivity) with the lowest AIC value (88.93) compared to the other models created. From the final model, it appears that only two variables have a significant effect on the species diversity of *Haliplus* species out of 5 variables. The p-value of the final fitted model was less than 0.05 (p-value = 2.11e-06), indicating that the model was significant. It was also calculated that conductivity had the largest significant effect on the abundance of *Haliplus* sp. (p = 0.00109) and temperature had a less significant effect (p = 0.03099) on the abundance of *Haliplus* species. It was cleared that the diversity of *Haliplus* sp. increased as temperature and conductivity increased (**Figure-2**).
+
+```{r echo=FALSE, fig.cap="**Figure-2**: Effect of environmental variables on abundance of *Haliplus* sp. (0 indicates absence of *Haliplus* sp. and 1 indicates presence of *Haliplus* sp. for the entire sampling site.)", fig.align = 'center', fig.height=4, fig.width=9}
+library(ggplot2)
+# Basic box plot
+par(mfrow = c(1,2))
+boxplot(agg_data$temperature ~ agg_data$`Haliplus sp.`,
+        col = c("red", "green"),
+        xlab = "Haliplus Sp. Abundance", 
+        ylab = "Temperature")
+        
+boxplot(agg_data$Conductivity ~ agg_data$`Haliplus sp.`,
+        col = c("red", "green"),
+        xlab = "Haliplus Sp. Abundance", 
+        ylab = "Conductivity") 
+        
+```
+
+## Effect of Environmental variable on whole macroinvertebrate species composition
+
+```{r include=FALSE}
+library(vegan)
+```
+
+```{r}
+species_ex <- read.csv("C:/Advance Data Analysis/MOD3_Multivariate_MD_DIDER_218203108/species_final.csv")
+```
+
+```{r include=FALSE}
+full_model <- cca(species_ex ~ ., data = trans.var)
+null_model <- cca(species_ex ~ 1, data = trans.var)
+colnames(trans.var)
+```
+
+```{r include=FALSE}
+set.seed(1)
+final_model <- step(full_model, scope = list(lower = formula(null_model), upper = formula(full_model)), 
+              test = "perm")
+summary(final_model)
+```
+
+
+The final fitted model to determine the effects of environmental variables on species diversity of the whole macroinvertebrates community estimated total variance in our species community matrix to be 3.37 and 0.32 variance explained by four significant environmental variables. To ensure model validity, regression residuals were also examined. [@ferreira2014importance]. The cumulative proportion for CCA1 and CCA2 was 0.86, which means that these two axes created by CCA can explain 86% of the relationships between macroinvertebrates species composition and environmental variables. Between the two CCA axes, the largest variation was explained by CCA1, which was about 70%, and CCA2 explained 16% of the total variability in the relationship between species composition and environmental variables. The proportion value (from the summary statistics of the fitted model) shows that 10% of the variance in species distribution can be explained by the variables temperature, catchment area, altitude and conductivity. On the other hand, the unconstrained axis (residuals) can explain 90% of the variance in the distribution of macroinvertebrates species. From the eigenvalue, we found that CCA1 and CCA2 axis explained 0.28 variance in the species distribution data sets (**Table-1**). 
+
+```{r include=FALSE}
+vif <- vif.cca(final_model)
+vif
+```
+
+```{r echo=FALSE}
+set.seed(1)
+anova_axis <- anova.cca(final_model, by = "axis")
+(anova_axis <- anova.cca(final_model, by = "axis")) %>%
+  kbl(caption = "**Table-1** : Statistical summary of CCA for environmental variables and macroinvertebrate species") %>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+A permutation test of the fitted model was performed where the data was shuffling for 999 times and refitting the model. To find out whether our final model is significant or not, a permutation test was performed. The permutation test showed that the model consisted of 4 variables and the chi-square value was 0.32 for the four environmental variables. The degrees of freedom for the residual were 323 and the chi-square value for the residual was 3.04. And the F-statistic was 8.16 for our fitted model which was high. In addition, the p value for the fitted model was 0.001, which means that 99.99% of the permuted values had an F statistic that was smaller, and only about 0.1% of the permuted F statistics for the calculated model were larger than the observed statistics, which also indicated that our model was significant (**Figure-2**(appendix section)). And the adjusted R-square value for the fitted model was 8.5%. The PERMANOVA test was performed to determine the significance level for each environmental variable. The PERMANOVA test showed that all four variables have a highly significant effect (p = 0.001) on the macroinvertebrates species composition. But temperature has the highest F-statistic value, followed by elevation, catchment area and conductivity. (**Table-2**) 
+
+```{r include=FALSE}
+# Permutation test
+library(vegan)
+pstat <- permustats(anova(final_model))
+summary(pstat)
+```
+
+```{r include=FALSE}
+set.seed(52)
+(perm <- anova(final_model))
+```
+
+```{r include=FALSE}
+RsquareAdj(final_model)
+```
+
+```{r echo=FALSE}
+permanova <- adonis2(species_ex ~ temperature + Cat_Area + Altitude + Conductivity, data = trans.var)
+(permanova) %>%
+  kbl(caption = "**Table-2** : PERMANOVA test summary for the fitted model") %>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+The CCA1 axis exhibited the strongest inverse relation with temperature, followed by conductivity and catchment area. As an environmental gradient, the CCA1 axis depicts the decreasing characteristics of temperature, conductivity, and catchment area. On the other hand, altitude is positively correlated with CCA1 axis (**Table-3**, **Figure-3**). 
+
+```{r echo=FALSE}
+library(ggplot2)
+library(ggvegan)
+fort <- fortify(final_model)
+env_cor_axis <- fort[705:708,1:5]
+(env_cor_axis ) %>%
+  kbl(caption = "**Table-3** : Correlation between environmental variables and derived CCA axis") %>%
+  kable_classic(full_width = T, html_font = "cambria")
+```
+
+On the CCA1 axis, individual taxa with high positive score included Chironomidae (*Cricotopus*(Paratrichocladius) *rufiventris*), Chironomidae (*Corynoneura* sp.), Chironomidae (*Parametriocnemus stylatus*), Elmidae (*Elmis* sp.), Baetidae (*Baetis rhodani*), Limoniidae (*Hexatoma* sp.), Chironomidae (*Heleniella ornaticollis*), *Hydrachnidia Gen.* sp.,   	Sericostomatidae (*Sericostoma personatum*) and the taxa with the high negative score included Platycnemididae (*Platycnemis pennipes*), Valvatidae (*Valvata piscinalis*), Naididae (*Psammoryctides barbatus*), Baetidae (*Cloeon* (Cloeon) *dipterum*) , Naididae (*Limnodrilus udekemianus*) , Chironomidae (*Procladius* sp.), Chironomidae (*Polypedilum* (Tripodura) *scalaenum* Gr.), Glossiphoniidae (*Helobdella stagnalis*), Aeshnidae (*Anisoptera* Gen. sp.), Chironomidae (*Polypedilum* (Polypedilum) *albicorne*), Chironomidae (*Tanytarsus ejuncidus*). (**Figure-3**)
+
+Furthermore, CCA2 axis explained 16% variability of the macroinvertebrate abundance and environmental relationship. From the axis score, temperature and altitude are positively correlated with the CCA2 axis, while altitude had the highest positive correlation with the CCA2 axis and the highest negative correlation found for the catchment area with the CCA2 axis, followed by conductivity (**Table-3**). For this reason, the CCA2 axis was plotted as a gradient with decreasing catchment area and conductivity variables, and as a gradient with increasing altitude and temperature variable (**Figure-3**). Macroinvertebrates species with high positive score in the CCA2 axis included Corixidae (*Micronecta scholtzi*), Nepidae (*Nepa cinerea*), Chironomidae (*Limnophyes* sp.), Aeshnidae (*Anisoptera* Gen. sp.), Hydraenidae (*Hydraena gracilis* Ad.), Chironomidae (*Microtendipes rydalensis*) and the species with highest negative score include Platycnemididae (*Platycnemis pennipes*), Naididae (*Psammoryctides albicola*), Limnephilidae (*Allogamus auricollis*), Hydroptilidae (*Ithytrichia lamellaris*), 	Naididae (*Potamothrix bavaricus*), Chironomidae (*Cricotopus*(Paratrichocladius) *rufiventris*) , *Leptoceridae* Gen. sp., Chironomidae (*Tanytarsus ejuncidus*). (**Figure-3**)
+
+```{r echo=FALSE, fig.cap="**Figure-3:** Species score and biplot score triplot on the basis of CCA (Species are indicated by the blue arrows and environmental variables are indicated by the red arrows.)", fig.align = 'center'}
+triplot1 <- ggplot() + 
+  geom_point(data = subset(fort, Score == 'biplot'),
+             mapping = aes(x = CCA1, y = CCA2),
+             colour="black",
+             alpha=0)+
+  geom_segment(data = subset(fort,Score == 'species'),
+               mapping = aes(x = 0, y = 0, xend = CCA1, yend = CCA2),
+               arrow = arrow(length = unit(0.015, "npc"),
+                             type = "open"),
+               colour="gray",
+               size =0.5,
+               alpha = 0.4)+
+  geom_segment(data = subset(fort,Score == 'biplot'),
+               mapping = aes(x = 0, y = 0, xend = CCA1, yend = CCA2),
+               arrow = arrow(length = unit(0.015, "npc"),
+                             type = "open"),
+               colour="red",
+               size =0.6,
+               alpha = 0.5)+
+  geom_text(data = subset(fort,Score == 'species'),
+            mapping = aes(label = Label, x = CCA1 * 1.1, y = CCA2 * 1.1), size =3.5, alpha=1)+
+  geom_text(data = subset(fort,Score == 'biplot'),
+            mapping = aes(label = Label, x = CCA1 * 1.1, y = CCA2 * 1.1), alpha=1.5, colour = "red")+
+  geom_abline(intercept = 0,slope = 0,linetype="dashed", size=0.8,colour="gray")+
+  geom_vline(aes(xintercept=0), linetype="dashed", size=0.8, colour="gray")+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black"))
+triplot1
+```
+
+```{r echo=FALSE, fig.cap="**Figure-4:** Site score and biplot score triplot on the basis of CCA (Sites are indicated by the black dots and environmental variables are indicated by the red arrows.)", fig.align = 'center'}
+triplot2 <- ggplot() + 
+  geom_point(data = subset(fort, Score == 'sites'),
+             mapping = aes(x = CCA1, y = CCA2),
+             colour="black",
+             alpha=1)+
+  geom_segment(data = subset(fort,Score == 'sites'),
+               mapping = aes(x = 0, y = 0, xend = CCA1, yend = CCA2),
+               arrow = arrow(length = unit(0.015, "npc"),
+                             type = "open"),
+               colour="gray",
+               size =0.5,
+               alpha = 0.4)+
+  geom_segment(data = subset(fort,Score == 'biplot'),
+               mapping = aes(x = 0, y = 0, xend = CCA1, yend = CCA2),
+               arrow = arrow(length = unit(0.015, "npc"),
+                             type = "open"),
+               colour="red",
+               size =0.6,
+               alpha = 0.5)+
+  geom_text(data = subset(fort,Score == 'sites'),
+            mapping = aes(label = Label, x = CCA1 * 1.1, y = CCA2 * 1.1), size =3.5, alpha=0)+
+  geom_text(data = subset(fort,Score == 'biplot'),
+            mapping = aes(label = Label, x = CCA1 * 1.1, y = CCA2 * 1.1), alpha=1.5, colour = "red")+
+  geom_abline(intercept = 0,slope = 0,linetype="dashed", size=0.8,colour="gray")+
+  geom_vline(aes(xintercept=0), linetype="dashed", size=0.8, colour="gray")+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black"))
+triplot2
+```
+## Response of biological traits
+
+```{r include=FALSE}
+library(ade4)
+trans.var
+sp <- read.csv("C:/Advance Data Analysis/MOD3_Multivariate_MD_DIDER_218203108/Species_Final_FD.csv")
+trait_macro <- read.csv("C:/Advance Data Analysis/MOD3_Multivariate_MD_DIDER_218203108/trait_Final_FD.csv")
+```
+
+```{r include=FALSE}
+trait_macro$feed_single = as.factor(trait_macro$feed_single)
+trait_macro$resp_single = as.factor(trait_macro$resp_single)
+trait_macro$volt_single = as.factor(trait_macro$volt_single)
+trait_macro$locom_single = as.factor(trait_macro$locom_single)
+trait_macro$ovip_single = as.factor(trait_macro$ovip_single)
+str(trait_macro)
+trait_macro$feed_single = as.numeric(trait_macro$feed_single)
+trait_macro$resp_single = as.numeric(trait_macro$resp_single)
+trait_macro$volt_single = as.numeric(trait_macro$volt_single)
+trait_macro$locom_single = as.numeric(trait_macro$locom_single)
+trait_macro$ovip_single = as.numeric(trait_macro$ovip_single)
+str(trait_macro)
+trait_macro2 <- trait_macro[,-1]
+rownames(trait_macro2) <- trait_macro[,1]
+str(trait_macro2)
+```
+
+```{r include=FALSE}
+afcL <- dudi.coa(sp, scannf = FALSE)
+acpR <- dudi.pca(trans.var, row.w = afcL$lw,
+scannf = FALSE)
+acpQ <- dudi.pca(trait_macro2, row.w = afcL$cw,
+scannf = FALSE)
+rlq <- rlq(acpR,afcL,acpQ, scannf = FALSE)
+```
+
+```{r include=FALSE}
+plot(rlq)
+```
+
+
+```{r echo=FALSE, fig.cap="**Figure-5:** Distribution of environmental variables, species characteristics, and macroinvertebrate species along the first two RLQ axes (the horizontal axis corresponds to RLQ axis-1 and the vertical axis corresponds to RLQ axis-2).)", fig.align = 'center'}
+par(mfrow = c(1, 3))
+s.arrow(rlq$l1)
+s.arrow(rlq$c1)
+s.label(rlq$lQ)
+```
+
+
+
+```{r include=FALSE}
+summary(rlq)
+```
+
+     
+```{r include=FALSE}
+rlq$c1 #traits score
+```
+
+```{r include=FALSE}
+rlq$lQ # species score
+```
+
+```{r include=FALSE}
+rlq$l1 #variables score
+```
+
+```{r include=FALSE}
+rlq$lR # site score
+```
+
+The first axis of RLQ explained the most variability of the R and Q matrix. On this axis, 98% of the expected inertia was extracted, while only 1.7% was extracted on the second axis (From the summary statistics of RLQ analysis). The total projected inertia described by these two axes is 99.86%, indicating that this two axis can explain the most of the variability in our trait and environmental variable databases. The correlation between the new site score (constrained by environmental factors) and the new species score (constrained by species characteristics) is minimized using RLQ analysis [@choler2005consistent]. The eigenvalue and covariance for the first axis were 0.44 and 0.66, respectively. However, for the second axis, the eigenvalue and covariance were 0.008 and 0.09, respectively, and thus lower than those for the first axis. The correlation between new site score and species score in RLQ axis1 was 0.285 and in RLQ axis2 was 0.053. **Figure 5** illustrates to understand the relationships among environmental variables, species characteristics, and macroinvertebrate assemblage along the first two RLQ axes. From this figure, we can see that the left part of the RLQ axis1 represents higher conductivity and response traits of *Haliplus* sp is positively correlated with the conductivity. But, the voltinism traits of the *Haliplus* sp. is negatively correlated with the conductivity. Moreover, feeding behavior and oviposition traits of *Asellus aquaticus* species are positively correlated with the temperature and locomotion traits is negatively correlated with the temperature. Voltinism traits of *Elmis* sp. is positively correlated with the altitude and response traits is negatively correlated with the altitude. And locomotion traits of *Baetis* sp. is positively correlated with the pH and feeding behavior, response traits are negatively correlated with the pH. (**Figure-5**)   
+
+
+
+# Discussion
+
+Macroinvertebrates distribution depended significantly (p-value <0.05) on temperature, catchment area, elevation, and conductivity (**Table-2**). A significant positive relationship was found between macroinvertebrates abundance and altitude variables (**Table-3**). A negative relationship was found for catchment area and conductivity (**Table-3**). From the CCA analysis, temperature is negatively correlated with the first CCA1 axis, which means that this axis is interpreted as a gradient for the decrease of the temperature variable (**Figure-3**). Some macro invertebrate for example, Aeshnidae (*Anisoptera* Gen. sp.), Corixidae (*Micronecta scholtzi*), Nepidae (*Nepa cinerea*), Chironomidae (*Tanypus punctipennis*), Baetidae (*Baetis nexus*), Baetidae (*Cloeon* (Cloeon) *dipterum*), 	Naididae (*Limnodrilus udekemianus*), Hydropsychidae (*Hydropsyche bulbifera*), Gerridae (*Gerris* sp.) and more species are positively correlated with temperature, indicating that these species are temperature-tolerant species. On the other hand, macroinvertebrate species like Elmidae (*Elmis* sp.), Baetidae (*Baetis* sp.), Hydrachnidiae (*Hydrachnidia* Gen. sp.), Limoniidae (*Hexatoma* sp.), Limnephilidae (*Allogamus auricollis*) are negatively correlated with temperature, which means that the abundance of these species decreases with increasing temperature. Temperature has a significant effect on the respiration rate of benthic macroinvertebrates, and in this way temperature controls oxygen availability to macroinvertebrates species [@sharifinia2012benthic]. Altitude correlated positively with both CCA axes and also had a significant effect on invertebrate fauna. Some families of macroinvertebrates species, e.g. Sericostomatidae. (*Sericostoma flavicorne*), Chironomidae (*Heleniella ornaticollis*), Hydraenidae (*Hydraena gracilis* Ad.), Naididae (*Pristina* sp.), Chironomidae (*Corynoneura* sp.), Chironomidae (*Parametriocnemus stylatus*), Limoniidae (*Hexatoma* sp.), Limnephilidae (*Allogamus auricollis*) were increased with increasing of altitude (**Figure-3**). From the correlation plot, it can be seen that environmental variables such as temperature and conductivity decrease with increasing altitude (**Figure-1**). Temperature and conductivity decrease at higher elevations. Due to the longer freeze period, food availability, growth rate and time to complete the biological cycle are reduced. For this reason, some macroinvertebrates are observed in large numbers due to their adaptability to these extreme environmental conditions. [@kasangaki2008land]. A study conducted by @fureder2006macroinvertebrate examined the effects of altitude and catchment characteristics on macroinvertebrate communities in several lakes in Europe (Italy, Switzerland, Austria). It was found that the abundance of macroinvertebrates per sample increased with increasing elevation up to a certain altitude, after that limit the abundance of benthic macroinvertebrates decreased. Conductivity increases abundance of some family of macroinvertebrate species such as Haliplidae (*Haliplus* sp.), 	Naididae (*Psammoryctides barbatus*), *Leptoceridae* Gen. sp., Chironomidae (*Tanytarsus ejuncidus*), *Zygoptera* Gen. sp., Naididae (*Potamothrix bavaricus*), Platycnemididae (*Platycnemis pennipes*) and with increasing of catchment area Hydroptilidae(*Ithytrichia lamellaris*) species abundance was also increased. In addition, 	Chironomidae (*Thienemanniella* sp.), Chironomidae (*Corynoneura* sp.), Naididae (*Pristina* sp.), Chironomidae (*Heleniella ornaticollis*), Chironomidae (*Microtendipes rydalensis*), Hydraenidae (*Hydraena gracilis* Ad.) species abundances are reduced with increasing temperature and conductivity (**Figure-3**). When agricultural runoff containing harmful fertilizers and industrial waste water enters waterways, the conductivity of the stream water increases. The introduction of salt into the stream water also increases the conductivity of the stream water. [@encina2020relationship] The researchers investigated the impact of salt usage in fish farms on macroinvertebrates drift in a freshwater stream and discovered that increasing conductivity had an influence on macroinvertebrate drift rates and the family of macroinvertebrates included Naididae, Chironomidae. A study by @miserendino2001macroinvertebrate examined the relationship between macroinvertebrates and environmental variables and found also same result like us that some family of macroinvertebrates abundance increased with increasing conductivity, temperature, and elevation.
+The response of biological traits of Haliplidae (*Haliplus* sp.), Baetidae (*Baetis* sp.), Elmidae (*Elmis* sp.), and Asellidae (*Asellus aquaticus*) to environmental variables was examined using RLQ analysis. RLQ analysis revealed that conductivity had a positive effect on the response trait and abundance of Haliplidae (*Haliplus* sp.) family of macroinvertebrates. Temperature had positive impacts on the feeding behavior and increasing pre- and post-laying behavior of Asellidae (*Asellus aquaticus*) species [@lancaster2013aquatic], which means that as temperature increases, so do egg-laying opportunities and abundance for macroinvertebrates of the family Asellidae. The number of breeds raised per year or Voltinism of Elmidae (*Elmis* sp.) is increased with increasing altitude. *Elmis* sp. referred as univoltine races and it was also cleared that the voltinism is very sensitive to temperature and conductivity for *Elmis* sp. (**Figure-5**). In addition, the swimming ability and body size of the Baetidae family (*Baetis* sp.) were found to increase with increasing stream water pH which means this species is pH-tolerant species. 
+
+
+# Appendix
+
+```{r include=FALSE}
+library(car)
+```
+
+
+```{r echo=FALSE, fig.cap=" **Figure-1:** Pairwise scatterplot of continuous variables for macroinvertebrate data", fig.align = 'center', fig.height=5, fig.width=7}
+spm(agg_data[, c(2:7)])
+```
+
+```{r fig.cap=" **Figure-2:** Density plot for permutation test of final fitted CCA model", fig.align = 'center',  fig.height=5, fig.width=7}
+densityplot(pstat)
+```
+
+```{r echo=FALSE, fig.cap="**Figure-3**: Effect of temperature on abundance of macroinvertebrate species (0 indicates absence and 1 indicates presence of macroinvertebrates for the entire sampling site.)", fig.align = 'center', fig.height=7, fig.width=9}
+library(ggplot2)
+# Basic box plot
+par(mfrow = c(2,2))
+boxplot(agg_data$temperature ~ agg_data$`Baetis nexus`,
+        col = c("red", "green"),
+        xlab = "Baetis nexus", 
+        ylab = "Temperature")
+        
+boxplot(agg_data$temperature ~ agg_data$`Tanypus punctipennis`,
+        col = c("red", "green"),
+        xlab = "Tanypus punctipennis", 
+        ylab = "Temperature")
+
+boxplot(agg_data$temperature ~ agg_data$`Hexatoma sp.`,
+        col = c("red", "green"),
+        xlab = "Hexatoma sp.", 
+        ylab = "Temperature") 
+
+boxplot(agg_data$temperature ~ agg_data$`Cricotopus (Paratrichocladius) rufiventris`,
+        col = c("red", "green"),
+        xlab = "Cricotopus (Paratrichocladius) rufiventris", 
+        ylab = "Temperature") 
+```
+
+```{r echo=FALSE, fig.cap="**Figure-4**: Effect of conductivity on abundance of macroinvertebrate species (0 indicates absence and 1 indicates presence of macroinvertebrates for the entire sampling site.)", fig.align = 'center', fig.height=7, fig.width=9}
+library(ggplot2)
+# Basic box plot
+par(mfrow = c(2,2))
+boxplot(agg_data$Conductivity ~ agg_data$`Potamothrix bavaricus`,
+        col = c("red", "green"),
+        xlab = "Potamothrix bavaricus", 
+        ylab = "Conductivity")
+        
+boxplot(agg_data$Conductivity ~ agg_data$`Psammoryctides albicola`,
+        col = c("red", "green"),
+        xlab = "Psammoryctides albicola", 
+        ylab = "Conductivity")
+
+boxplot(agg_data$Conductivity ~ agg_data$`Heleniella ornaticollis`,
+        col = c("red", "green"),
+        xlab = "Heleniella ornaticollis", 
+        ylab = "Conductivity") 
+
+boxplot(agg_data$Conductivity ~ agg_data$`Hydraena gracilis Ad.`,
+        col = c("red", "green"),
+        xlab = "Hydraena gracilis Ad.", 
+        ylab = "Conductivity")
+```
+```{r echo=FALSE, fig.cap="**Figure-5**: Effect of altitude on abundance of macroinvertebrate species (0 indicates absence and 1 indicates presence of macroinvertebrates for the entire sampling site.)", fig.align = 'center', fig.height=7, fig.width=9}
+library(ggplot2)
+# Basic box plot
+par(mfrow = c(2,2))
+boxplot(agg_data$Altitude ~ agg_data$`Sericostoma flavicorne/personatum`,
+        col = c("red", "green"),
+        xlab = "Sericostoma flavicorne/personatum", 
+        ylab = "Altitude")
+        
+boxplot(agg_data$Altitude ~ agg_data$`Heleniella ornaticollis`,
+        col = c("red", "green"),
+        xlab = "Heleniella ornaticollis", 
+        ylab = "Altitude")
+
+boxplot(agg_data$Altitude ~ agg_data$`Haliplus sp.`,
+        col = c("red", "green"),
+        xlab = "Haliplus sp.", 
+        ylab = "Altitude") 
+
+boxplot(agg_data$Altitude ~ agg_data$`Potamothrix bavaricus`,
+        col = c("red", "green"),
+        xlab = "Potamothrix bavaricus", 
+        ylab = "Altitude")
+```
+
+# Reference
