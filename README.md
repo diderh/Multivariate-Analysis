@@ -89,8 +89,16 @@ This project provides a comprehensive workflow for analyzing macroinvertebrate c
 
 ## Conclusion
 
-This repository provides a structured approach to analyzing macroinvertebrate communities and their environmental and functional trait drivers. The workflow is reproducible and adaptable for similar ecological datasets.  
-For feedback, questions, or contributions, please open an issue or contact the maintainer.
+This analysis revealed clear relationships between environmental variables and macroinvertebrate community structure across sampled sites. Key findings include:
+
+- **Environmental Drivers:** Variables such as catchment area, altitude, water depth, conductivity, and pH were found to significantly influence the abundance and diversity of macroinvertebrate taxa.
+- **Species Responses:** Certain taxa, such as Haliplus sp. and Baetis sp., showed strong responses to specific gradients (e.g., higher abundance in sites with greater water depth or lower conductivity).
+- **Community Patterns:** Canonical Correspondence Analysis (CCA) highlighted distinct community assemblages aligned with environmental gradients, suggesting environmental filtering as a key driver of community composition.
+- **Functional Traits:** RLQ analysis indicated that functional traits such as feeding type, respiration, and locomotion are non-randomly distributed along environmental axes, further supporting trait-environment linkages.
+- **Diversity Metrics:** Sites with more heterogeneous environmental conditions tended to support greater species richness and functional diversity.
+
+Overall, this multivariate approach provided a robust framework to disentangle the complex interactions between environment, species composition, and functional traits. The results underscore the importance of both abiotic factors and species-level traits in shaping aquatic biodiversity patterns. These findings contribute valuable insights for conservation and management of freshwater ecosystems.
+
 
 ---
 
