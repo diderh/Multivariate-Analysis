@@ -29,6 +29,7 @@ trait_macro / trait_macro2
 Biological/functional traits data for each macroinvertebrate species.
 Columns: feed_single, resp_single, volt_single, locom_single, ovip_single, etc.
 trait_macro2: Row names set to species name, trait columns only.
+
 3. Data Processing Steps
 Read in environmental and abundance data.
 Merge on sample_id to form agg_data.
@@ -37,11 +38,13 @@ Remove NA/infinite values after transformation.
 Create trans.var for statistical analysis with selected variables.
 Diversity metrics & richness calculated on species abundance data.
 GLM/CCA/RLQ analyses relate environmental variables, species abundance, and functional traits.
+
 4. Analytical Workflow
 Summary statistics: On environmental variables (raw and transformed)
 GLM: Models abundance of individual taxa (e.g., Haliplus sp.) as a function of environmental variables.
 CCA (Canonical Correspondence Analysis): Relates multivariate species abundance to environmental gradients.
 RLQ analysis: Relates environment, species traits, and abundance.
+
 5. Output
 Statistical summaries (tables, VIFs, permutation tests, etc.)
 Diversity indices (species richness, Shannon index)
@@ -52,6 +55,7 @@ Site (sample_id): Primary key; links all data.
 Environment Variables: Linked to site.
 Species Abundance: Each species is a variable, linked to site.
 Functional Traits: Linked to species.
+
 In summary:
 
 The schema is centered around sample sites (sample_id), with environmental data and species data merged.
