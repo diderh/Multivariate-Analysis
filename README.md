@@ -94,6 +94,11 @@ For feedback, questions, or contributions, please open an issue or contact the m
 
 ---
 
+
+
+
+
+
 ## Database-Style Schema for Multivariate Macroinvertebrate Analysis
 
 ### Table: sites
