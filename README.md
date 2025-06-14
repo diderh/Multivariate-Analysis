@@ -1,144 +1,98 @@
 
-# Introduction
+# Multivariate Analysis of Macroinvertebrate Communities
 
-This document describes the methodology, data structure, and analytical workflow for the multivariate analysis of macroinvertebrate communities in relation to environmental gradients and species traits.  
-It serves as both project documentation and a reproducible analysis template.
+## Table of Contents
 
-# Data Overview
+- [Project Overview](#project-overview)
+- [Getting Started](#getting-started)
+- [Workflow Steps](#workflow-steps)
+- [Outputs](#outputs)
+- [Conclusion](#conclusion)
 
-## Data Sources
+---
 
-- **environment.rds:** Environmental variables per site (e.g., temperature, altitude, cat_area, max_depth, conductivity, pH).
-- **macroinvertebrates.rds:** Macroinvertebrate species abundance data per site (species as columns, abundance/presence as values).
-- **species_final.csv:** Species abundance data for selected analyses.
-- **Species_Final_FD.csv:** Functional diversity traits for macroinvertebrates.
-- **trait_Final_FD.csv:** Detailed biological traits for macroinvertebrate species.
+## Project Overview
 
-## Data Structure
+This project provides a comprehensive workflow for analyzing macroinvertebrate community structure in relation to environmental gradients and biological traits. The analysis leverages rich datasets, including environmental variables, species abundance, and functional traits, to perform advanced multivariate analyses such as GLM, CCA, and RLQ.
 
-### Sites Table
+**Key Data Sources:**
+- `environment.rds`: Environmental variables per site (e.g., temperature, altitude, cat_area, max_depth, conductivity, pH).
+- `macroinvertebrates.rds`: Abundance/presence data for macroinvertebrate species per site.
+- `species_final.csv`: Species abundance data for certain analyses.
+- `Species_Final_FD.csv`: Macroinvertebrate functional diversity traits.
+- `trait_Final_FD.csv`: Detailed biological traits for macroinvertebrate species.
 
-| Column      | Description                    |
-|-------------|-------------------------------|
-| sample_id   | Unique site identifier         |
-| ...         | Additional site metadata       |
+**Schema Summary:**
+- Data are centered on `sample_id`, linking environmental and biological data.
+- Environmental variables are preprocessed (e.g., log-transformed).
+- Analyses explore links between environment, species abundance, and traits.
 
-### Environment Table
+---
 
-| Column        | Description                         |
-|---------------|-------------------------------------|
-| sample_id     | Foreign key to sites                |
-| temperature   | Water temperature                   |
-| cat_area      | Catchment area                      |
-| altitude      | Site altitude                       |
-| max_depth     | Maximum water depth                 |
-| conductivity  | Water conductivity                  |
-| pH            | pH value                            |
-| ...           | Other environmental variables       |
+## Getting Started
 
-### Macroinvertebrates Table
+1. **Clone the repository** and ensure you have R and the following packages installed:
+    - `tidyverse`
+    - `vegan`
+    - `ade4`
+    - `FD`
+2. **Data Preparation:**
+    - Place all data files (`environment.rds`, `macroinvertebrates.rds`, `species_final.csv`, `Species_Final_FD.csv`, `trait_Final_FD.csv`) in your working directory.
+3. **Open your R environment** and load the data:
 
-| Column        | Description                         |
-|---------------|-------------------------------------|
-| sample_id     | Foreign key to sites                |
-| Haliplus_sp   | Abundance/presence of Haliplus sp.  |
-| Baetis_sp     | Abundance/presence of Baetis sp.    |
-| ...           | Other species columns               |
+    ```r
+    environment <- readRDS("environment.rds")
+    macroinv <- readRDS("macroinvertebrates.rds")
+    species_abund <- read.csv("species_final.csv", row.names = 1)
+    traits <- read.csv("trait_Final_FD.csv", row.names = 1)
+    ```
 
-### Species Traits Table
+---
 
-| Column         | Description                        |
-|----------------|------------------------------------|
-| species_name   | Species identifier                 |
-| feed_single    | Feeding trait code                 |
-| resp_single    | Respiration trait code             |
-| volt_single    | Voltinism trait code               |
-| locom_single   | Locomotion trait code              |
-| ovip_single    | Oviposition trait code             |
-| ...            | Other biological traits            |
+## Workflow Steps
 
-# Analytical Workflow
+### 1. Data Processing
 
-## Data Loading and Preparation
+- Merge environmental and macroinvertebrate data by `sample_id`.
+- Log-transform skewed variables (e.g., cat_area, altitude, max_depth, conductivity, pH).
+- Remove NA or infinite values.
+- Create selected variable sets for statistical analyses.
 
-```{r setup, include=TRUE}
-# Load required packages
-library(tidyverse)
-library(vegan)      # For multivariate analyses
-library(ade4)       # For RLQ analysis
-library(FD)         # For functional diversity
+### 2. Diversity Analysis
 
-# Read data
-environment <- readRDS("environment.rds")
-macroinv <- readRDS("macroinvertebrates.rds")
-species_abund <- read.csv("species_final.csv", row.names = 1)
-traits <- read.csv("trait_Final_FD.csv", row.names = 1)
+- Calculate species richness and diversity indices (e.g., Shannon index) on abundance data.
 
-Methodology:
-1. Data Sources
-environment.rds: Environmental variables per site (e.g., temperature, altitude, cat_area, max_depth, conductivity, pH).
-macroinvertebrates.rds: Macroinvertebrate species abundance data per site (each species as a column, presence/absence or abundance as values).
-species_final.csv: Species abundance (used for some diversity and multivariate analyses).
-Species_Final_FD.csv: Functional diversity traits for macroinvertebrates.
-trait_Final_FD.csv: Detailed biological traits for macroinvertebrate species.
-2. Data Frames and Key Variables
-environment
+### 3. Statistical Modeling
 
-Columns: sample_id, temperature, cat_area, altitude, max_depth, conductivity, pH, etc.
-macroinvertebrates
+- **GLM:** Model abundance of individual taxa (e.g., Haliplus sp.) as a function of environmental variables.
+- **CCA:** Relate multivariate species abundance to environmental gradients.
+- **RLQ:** Integrate environmental variables, species abundance, and functional traits for trait-environment relationships.
 
-Columns: sample_id, Haliplus sp., Baetis sp., ... (each species as a column)
-agg_data (merged data)
+### 4. Schema & Relationships
 
-Created by merging environment and macroinvertebrates on sample_id.
-Contains: All environmental variables and all species columns.
-Transformed columns: log-transformed versions of environmental variables (e.g., Cat_Area, Altitude, Max_Depth, Conductivity, log_pH).
-trans.var
+- **sites**: Primary key is `sample_id`.
+- **environment**: Environmental variables, linked by `sample_id`.
+- **macroinvertebrates**: Abundance data, linked by `sample_id`.
+- **species_traits**: Biological/functional traits, linked by `species_name`.
+- **agg_data**: Merged table/view for analysis.
 
-Contains selected/processed (including log-transformed) environmental variables:
-temperature, Cat_Area, Altitude, Max_Depth, Conductivity, log_pH
-species_ex
+---
 
-Data frame with species abundance per sample site (from CSV).
-trait_macro / trait_macro2
+## Outputs
 
-Biological/functional traits data for each macroinvertebrate species.
-Columns: feed_single, resp_single, volt_single, locom_single, ovip_single, etc.
-trait_macro2: Row names set to species name, trait columns only.
+- Summary statistics and statistical test outputs (tables, VIFs, permutation tests).
+- Diversity indices (species richness, Shannon index).
+- Visualizations: boxplots, CCA biplots, RLQ triplots, correlation plots.
+- Interpretation and discussion of environmental effects on macroinvertebrate species and traits.
 
-3. Data Processing Steps
-Read in environmental and abundance data.
-Merge on sample_id to form agg_data.
-Log-transform skewed environmental variables.
-Remove NA/infinite values after transformation.
-Create trans.var for statistical analysis with selected variables.
-Diversity metrics & richness calculated on species abundance data.
-GLM/CCA/RLQ analyses relate environmental variables, species abundance, and functional traits.
+---
 
-4. Analytical Workflow
-Summary statistics: On environmental variables (raw and transformed)
-GLM: Models abundance of individual taxa (e.g., Haliplus sp.) as a function of environmental variables.
-CCA (Canonical Correspondence Analysis): Relates multivariate species abundance to environmental gradients.
-RLQ analysis: Relates environment, species traits, and abundance.
+## Conclusion
 
-5. Output
-Statistical summaries (tables, VIFs, permutation tests, etc.)
-Diversity indices (species richness, Shannon index)
-Plots (boxplots, biplots, triplots, correlation plots)
-Interpretation and discussion of environmental effects on species and traits.
-Entity-Relationship Summary
-Site (sample_id): Primary key; links all data.
-Environment Variables: Linked to site.
-Species Abundance: Each species is a variable, linked to site.
-Functional Traits: Linked to species.
+This repository provides a structured approach to analyzing macroinvertebrate communities and their environmental and functional trait drivers. The workflow is reproducible and adaptable for similar ecological datasets.  
+For feedback, questions, or contributions, please open an issue or contact the maintainer.
 
-In summary:
-
-The schema is centered around sample sites (sample_id), with environmental data and species data merged.
-Environmental variables are preprocessed (log-transformed).
-Analyses explore the relationship between environmental variables, species abundance, and functional traits.
-Results are presented as statistical tables and visualizations.
-
+---
 
 ## Database-Style Schema for Multivariate Macroinvertebrate Analysis
 
