@@ -1,9 +1,3 @@
----
-title: "Multivariate Analysis of Macroinvertebrate Communities"
-author: "Your Name"
-date: "`r Sys.Date()`"
-output: html_document
----
 
 # Introduction
 
