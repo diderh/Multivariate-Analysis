@@ -38,7 +38,7 @@ This project provides a comprehensive workflow for analyzing macroinvertebrate c
     - `FD`
 2. **Data Preparation:**
     - Place all data files (`environment.rds`, `macroinvertebrates.rds`, `species_final.csv`, `Species_Final_FD.csv`, `trait_Final_FD.csv`) in your working directory.
-3. **Open your R environment** and load the data:
+3. **Open R environment** and load the data:
 
     ```r
     environment <- readRDS("environment.rds")
