@@ -1,3 +1,85 @@
+---
+title: "Multivariate Analysis of Macroinvertebrate Communities"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Introduction
+
+This document describes the methodology, data structure, and analytical workflow for the multivariate analysis of macroinvertebrate communities in relation to environmental gradients and species traits.  
+It serves as both project documentation and a reproducible analysis template.
+
+# Data Overview
+
+## Data Sources
+
+- **environment.rds:** Environmental variables per site (e.g., temperature, altitude, cat_area, max_depth, conductivity, pH).
+- **macroinvertebrates.rds:** Macroinvertebrate species abundance data per site (species as columns, abundance/presence as values).
+- **species_final.csv:** Species abundance data for selected analyses.
+- **Species_Final_FD.csv:** Functional diversity traits for macroinvertebrates.
+- **trait_Final_FD.csv:** Detailed biological traits for macroinvertebrate species.
+
+## Data Structure
+
+### Sites Table
+
+| Column      | Description                    |
+|-------------|-------------------------------|
+| sample_id   | Unique site identifier         |
+| ...         | Additional site metadata       |
+
+### Environment Table
+
+| Column        | Description                         |
+|---------------|-------------------------------------|
+| sample_id     | Foreign key to sites                |
+| temperature   | Water temperature                   |
+| cat_area      | Catchment area                      |
+| altitude      | Site altitude                       |
+| max_depth     | Maximum water depth                 |
+| conductivity  | Water conductivity                  |
+| pH            | pH value                            |
+| ...           | Other environmental variables       |
+
+### Macroinvertebrates Table
+
+| Column        | Description                         |
+|---------------|-------------------------------------|
+| sample_id     | Foreign key to sites                |
+| Haliplus_sp   | Abundance/presence of Haliplus sp.  |
+| Baetis_sp     | Abundance/presence of Baetis sp.    |
+| ...           | Other species columns               |
+
+### Species Traits Table
+
+| Column         | Description                        |
+|----------------|------------------------------------|
+| species_name   | Species identifier                 |
+| feed_single    | Feeding trait code                 |
+| resp_single    | Respiration trait code             |
+| volt_single    | Voltinism trait code               |
+| locom_single   | Locomotion trait code              |
+| ovip_single    | Oviposition trait code             |
+| ...            | Other biological traits            |
+
+# Analytical Workflow
+
+## Data Loading and Preparation
+
+```{r setup, include=TRUE}
+# Load required packages
+library(tidyverse)
+library(vegan)      # For multivariate analyses
+library(ade4)       # For RLQ analysis
+library(FD)         # For functional diversity
+
+# Read data
+environment <- readRDS("environment.rds")
+macroinv <- readRDS("macroinvertebrates.rds")
+species_abund <- read.csv("species_final.csv", row.names = 1)
+traits <- read.csv("trait_Final_FD.csv", row.names = 1)
+
 Methodology:
 1. Data Sources
 environment.rds: Environmental variables per site (e.g., temperature, altitude, cat_area, max_depth, conductivity, pH).
